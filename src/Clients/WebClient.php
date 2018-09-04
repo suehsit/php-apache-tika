@@ -74,10 +74,7 @@ class WebClient extends Client
             $this->setHost($host);
         }
 
-        if($port)
-        {
-            $this->setPort($port);
-        }
+        $this->setPort($port);
 
         if(!empty($options))
         {
@@ -219,9 +216,9 @@ class WebClient extends Client
             $options[CURLOPT_HTTPHEADER][] = $header;
         }
 
+        $port_part =  ($this->port) ? ":{$this->port}" : '';
         // cURL init and options
-        $options[CURLOPT_URL] = "http://{$this->host}:{$this->port}" . "/$resource";
-
+        $options[CURLOPT_URL] = "{$this->host}{$port_part}" . "/$resource";
         // get the response and the HTTP status code
         list($response, $status) = $this->exec($options);
 
